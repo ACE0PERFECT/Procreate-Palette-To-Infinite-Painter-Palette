@@ -30,13 +30,13 @@ as the full name of the .swatches file. For example if the file is named "123.sw
 zip_file_path = "123.swatches"
 ```
 Run the run.py script in cmd/terminal.  
-再cmd或者终端运行run.py.
+在cmd或者终端运行run.py.
 ```
 python run.py
 ```
 ## 1.4
 There should be a file ended with ".clrs" shows up int he folder. Import this .clrs file in Infinite Painter palette.  
-会生成一个以".clrs"结尾的文件，在Infinite Painter中调色板那里导入即可。
+程序运行之后会生成一个以".clrs"结尾的文件，在Infinite Painter中调色板那里导入即可。
 
 ---
 
