@@ -8,7 +8,7 @@ This is a python script for transfer color palette from Procreate to Infinite Pa
 # 1.How to use / 1.如何使用
 
 ## 1.1
-Download "run.py" and establish the python env. If you dont know how to, I have no idea either. Maybe I will make an out-of-the-box site in the future.
+Download "run.py" and establish the python env. If you dont know how to, I have no idea either. Maybe I will make an out-of-the-box site in the future.  
 首先下载"run.py" 并搭建python 环境。不知道的话，我也没办法了。也许以后我会做个点两下就能用的网站。  
 
 ## 1.2
@@ -45,10 +45,10 @@ There should be a file ended with ".clrs" shows up int he folder. Import this .c
 In Procreate, palette is 3x10 (total 30). In Infinite Painter, its 5,5,5,5,4 (total 24). The difference in capacity caused the last 6 colors in the Procrate palette to be discarded.  
 在Procreate中，调色板是3行10列（总共30），但是Infinite Painter是55554（总共24）。容量的区别导致Procreate调色板的最后6个颜色无法导入。  
 ## 2.2 Difference in supporting null color / 对空颜色的支持不同
-Procreate supports saving null color to the palette while Infinite Painter doesn't. So if there are unoccupied place in your Procreate palette, it will be discarded. This difference together with the 
+Procreate supports saving null color to the palette while Infinite Painter doesn't. So if there are unoccupied place in your Procreate palette, it will be discarded. This difference together with the   
 Procreate支持在调色板上留空，但是Infinite Painter不行。所以Procreate调色板上没放置颜色的格子会被丢弃。
 ## 2.3 Difference in display / 显示不同
-As joint result of 2.1 and 2.2, after transfer, the displayed arrangement of color in Infinite Painter differs to it in Procreate.  
+As joint result of 2.1 and 2.2, after transfer, the displayed arrangement of color in Infinite Painter differs to it in Procreate.    
 因为前两点的共同作用，这两个软件对颜色的排布会有些不同。
 ##  2.4 Color might not exactly the same / 颜色并不是完全一样的
 Procreate uses HSB(HSV) model for color storage, while Infinite Painter uses ARGB(AARRGGBB) format. They are not exactly the same color mapping method. But this is trivial since human eye may not notice this difference, mostly.  
