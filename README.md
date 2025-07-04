@@ -35,7 +35,7 @@ Run the run.py script in cmd/terminal.
 python run.py
 ```
 ## 1.4
-There should be a file ended with ".clrs" shows up int he folder. Import this .clrs file in Infinite Painter palette.  
+There should be a file ended with ".clrs" shows up in the folder. Import this .clrs file in Infinite Painter palette.  
 程序运行之后会生成一个以".clrs"结尾的文件，在Infinite Painter中调色板那里导入即可。
 
 ---
