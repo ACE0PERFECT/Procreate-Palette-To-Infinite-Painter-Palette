@@ -5,7 +5,7 @@ from io import TextIOWrapper
 
 
 # this is path of the .Swatches file
-zip_file_path = "example.swatches"
+zip_file_path = "水_力_昼.swatches"
 
 
 
@@ -76,7 +76,6 @@ def hsv_to_IPColor(h, s, v):
     r = max(0, min(r, 255))
     g = max(0, min(g, 255))
     b = max(0, min(b, 255))
-    
     return int(f"0xFF{r:02x}{g:02x}{b:02x}".upper(),16)
 
 # example
@@ -91,14 +90,13 @@ if __name__ == "__main__":
         for i, color in enumerate(pro_colors):
 
             # palette in Procreate is 3x10 while it in IP is 5,5,5,5,4. The last 6 colors are discarded. :(
-            if i > 23: 
+            if i > 24: 
                 break
 
             # if its None then the color is undefined in Pro, but IP doesn't support undefined color in palette
             #  so it's discarded.
             if color == None:
                 continue
-
             converted.append(hsv_to_IPColor(360*color["hue"],color["saturation"],color["brightness"])-shift)
 
         data = {
