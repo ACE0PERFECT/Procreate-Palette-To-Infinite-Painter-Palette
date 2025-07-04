@@ -1,7 +1,7 @@
-# Procreate Palette To Infinite Painter Palette  / Procreate调色板转Infinite Painter调色板
+# Procreate Palette To Infinite Painter Palette  / Procreate调色板迁移Infinite Painter调色板
 
 This is a python script for transfer color palette from Procreate to Infinite Painter.  
-*一个Python脚本，用于将Procreate调色板的颜色添加到Infinite Painter.* 
+*一个Python脚本，用于将Procreate调色板的颜色迁移到Infinite Painter.* 
 
 ---
 
