@@ -53,3 +53,6 @@ As joint result of 2.1 and 2.2, after transfer, the displayed arrangement of col
 ##  2.4 Colors might not be exactly the same / 颜色并不是完全一样的
 Procreate uses HSB(HSV) model for color storage, while Infinite Painter uses ARGB(AARRGGBB) format. They are not exactly the same color mapping method. But this is trivial since human eye may not notice this difference, mostly.  
 *Procreate用HSB(HSV)色彩空间存储颜色，Infinite Painter用ARGB(AARRGGBB)格式。这两种颜色映射方式不是完全等价的。但是应该没事，因为人眼大多数情况看不出区别。*
+## 2.5 modify this script if you need / 自定义
+Currently I am not adding batch convertion and other feature to this. Modify if you need. If you really need some features and dont know how to, tell me and I will implement in the future.      
+现在没做批量处理等等的功能，如果有需要的话，你可以自己加上。真需要的功能但是现在没有，跟我讲我也许会实现。
