@@ -89,8 +89,8 @@ if __name__ == "__main__":
         converted = []
         for i, color in enumerate(pro_colors):
 
-            # palette in Procreate is 3x10 while it in IP is 5,5,5,5,4. The last 6 colors are discarded. :(
-            if i > 24: 
+            # palette in Procreate is 3x10 while it in IP is 5xN
+            if i > 29: 
                 break
 
             # if its None then the color is undefined in Pro, but IP doesn't support undefined color in palette
