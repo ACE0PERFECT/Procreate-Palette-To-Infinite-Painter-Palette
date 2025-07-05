@@ -37,8 +37,8 @@ There should be a file ended with ".clrs" shows up in the folder. Import this .c
 
 # 2. Something you should know / 2. 你该知道的一些东西
 ## 2.1 Capacity and Arrangement Diffrence / 容量与排列不同  
-In Procreate, palette is 3x10 (total 30). In Infinite Painter, its 5,5,5,5,4 (total 24). The difference in capacity caused the last 6 colors in the Procrate palette to be discarded.  
-*在Procreate中，调色板是3行10列（总共30），但是Infinite Painter是55554（总共24）。容量的区别导致Procreate调色板的最后6个颜色无法导入。*  
+In Procreate, palette is 3x10 (total 30). In Infinite Painter, its 5xN.  
+*在Procreate中，调色板是3行10列（总共30），但是Infinite Painter是5xN。*  
 ## 2.2 Difference in supporting null color / 对空颜色的支持不同
 Procreate supports saving null color to the palette while Infinite Painter doesn't. So if there are unoccupied places in your Procreate palette, they will be discarded.     
 *Procreate支持在调色板上留空，但是Infinite Painter不行。所以Procreate调色板上没放置颜色的格子会被丢弃。*
