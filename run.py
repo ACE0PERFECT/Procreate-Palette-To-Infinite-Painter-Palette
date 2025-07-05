@@ -5,7 +5,7 @@ from io import TextIOWrapper
 
 
 # this is path of the .Swatches file
-zip_file_path = "水_力_昼.swatches"
+zip_file_path = "example.swatches"
 
 
 
