@@ -8,8 +8,8 @@ This is a python script for transfer color palette from Procreate to Infinite Pa
 # 1.How to use / 1.如何使用
 
 ## 1.1
-Download "run.py" and establish the python env. If you dont know how to, I have no idea either. Maybe I will make an out-of-the-box site in the future.  
-*首先下载"run.py" 并搭建python 环境。不知道的话，我也没办法了。也许以后我会做个点两下就能用的网站。*  
+Download "run.py" and establish the python env. If you dont know how to, I have no idea either. Download the "ProcreatePaletteToInfinitePainterPalette.html" file and double click it. No need to read lines below :).  
+*首先下载"run.py" 并搭建python 环境。不知道怎么操作的话，下载“ProcreatePaletteToInfinitePainterPalette.html”这个文件，双击打开运行。不用读下面的说明了。:)*  
 
 ## 1.2
 Export palette from Procreate (this should be a .swatches file) and save it in the same folder as run.py.  
