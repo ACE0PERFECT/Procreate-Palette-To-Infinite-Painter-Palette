@@ -1,7 +1,5 @@
 # Procreate Palette To Infinite Painter Palette  / Procreate调色板迁移Infinite Painter调色板
 
----
-
 # 1.How to use / 1.如何使用
 
 ## 1.1
