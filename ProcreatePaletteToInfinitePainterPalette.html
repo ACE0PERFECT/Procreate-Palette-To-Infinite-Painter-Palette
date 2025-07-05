@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procreate palette transfer tool / Procreate调色板转换工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 40px;
+        }
+        
+        header {
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #3498db;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f8f9ff;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            background-color: #edf2ff;
+        }
+        
+        .upload-area.highlight {
+            background-color: #e3f2fd;
+            border-color: #8e44ad;
+        }
+        
+        .upload-icon {
+            font-size: 60px;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .upload-text {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn.download {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn.download:hover {
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        .palette-preview {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .palette-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .colors-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        
+        .color-box {
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(0,0,0,0.7);
+            text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .color-box:hover {
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        
+        .color-box::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.info {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .instructions code {
+            background: #d1e7ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .colors-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Procreate palette transfer tool / Procreate调色板转换工具</h1>
+            <p class="subtitle">.swatches to .clrs / 将Procreate导出的.swatches文件转换为Inifinite Painter应用兼容的.clrs格式</p>
+        </header>
+        
+        <div class="content">
+            <div class="upload-area" id="dropArea">
+                <div class="upload-icon">🎨</div>
+                <p class="upload-text">Drag and drop the .swatches file here or / 拖放.swatches文件到此处 或</p>
+                <button class="btn" id="selectFileBtn">Select file / 选择文件</button>
+                <input type="file" id="fileInput" class="file-input" accept=".swatches">
+            </div>
+            
+            <div class="palette-preview" id="previewSection" style="display: none;">
+                <h3 class="palette-title" id="paletteName">Name of the palette / 调色板名称</h3>
+                <div class="colors-container" id="colorsContainer">
+                    <!-- 颜色预览将通过JS动态添加 -->
+                </div>
+            </div>
+            
+            <div class="status" id="statusMessage" style="display: none;"></div>
+            
+            <div style="text-align: center;">
+                <button class="btn download" id="downloadBtn" disabled>Download .clrs file / 下载.clrs文件</button>
+            </div>
+            
+            <div class="instructions">
+                <h3>Instruction / 使用说明</h3>
+                <ol>
+                    <li>Export .swatches palette file from Procreate / 在Procreate中导出你的调色板为<code>.swatches</code>文件</li>
+                    <li>Upload the file / 使用上面的按钮或拖放方式上传文件</li>
+                    <li>Preview in the page / 预览转换后的调色板颜色</li>
+                    <li>Click and download / 点击下载按钮获取<code>.clrs</code>文件</li>
+                    <li>Import into Inifite Painter / 在Infinite Painter应用中导入转换后的调色板文件</li>
+                </ol>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 made by Lula_Official@bilibili</p>
+            <p>Repo: <a href="https://github.com/ACE0PERFECT/Procreate-Palette-To-Infinite-Painter-Palette">https://github.com/ACE0PERFECT/Procreate-Palette-To-Infinite-Painter-Palette</a></p>
+        </footer>
+    </div>
+
+    <!-- 引入JSZip库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropArea = document.getElementById('dropArea');
+            const fileInput = document.getElementById('fileInput');
+            const selectFileBtn = document.getElementById('selectFileBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const previewSection = document.getElementById('previewSection');
+            const paletteName = document.getElementById('paletteName');
+            const colorsContainer = document.getElementById('colorsContainer');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            let convertedData = null;
+            
+            // 点击选择文件按钮
+            selectFileBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // 文件选择变化
+            fileInput.addEventListener('change', handleFile);
+            
+            // 拖放功能
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('highlight');
+            }
+            
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length) {
+                    handleFile({ target: { files } });
+                }
+            }
+            
+            // 处理文件
+            function handleFile(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (!file.name.endsWith('.swatches')) {
+                    showStatus('Please selecet legal .swatches file / 请选择有效的.swatches文件', 'error');
+                    return;
+                }
+                
+                showStatus('Processing... / 正在处理文件...', 'info');
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    processSwatchesFile(e.target.result);
+                };
+                reader.readAsArrayBuffer(file);
+            }
+            
+            // 处理.swatches文件
+            function processSwatchesFile(data) {
+                JSZip.loadAsync(data).then(function(zip) {
+                    // 查找JSON文件
+                    const jsonFiles = Object.keys(zip.files).filter(name => name.toLowerCase().endsWith('.json'));
+                    
+                    if (jsonFiles.length === 0) {
+                        showStatus('No JSON found in the .swatches file / 压缩文件中未找到JSON文件', 'error');
+                        return;
+                    }
+                    
+                    const jsonFilename = jsonFiles[0];
+                    
+                    zip.file(jsonFilename).async('string').then(function(jsonContent) {
+                        try {
+                            const pro = JSON.parse(jsonContent);
+                            const paletteNameStr = String(pro.name || 'Unnamed_Palette');
+                            const proColors = pro.swatches || [];
+                            
+                            const convertedColors = [];
+                            
+                            // 处理颜色（最多25个）
+                            for (let i = 0; i < proColors.length && i < 25; i++) {
+                                const color = proColors[i];
+                                if (color === null) continue;
+                                
+                                const argb = hsvToIPColor(
+                                    360 * color.hue,
+                                    color.saturation,
+                                    color.brightness
+                                );
+                                
+                                convertedColors.push(argb);
+                            }
+                            
+                            convertedData = {
+                                name: paletteNameStr,
+                                colors: convertedColors
+                            };
+                            
+                            // 显示预览
+                            displayPalettePreview(paletteNameStr, convertedColors);
+                            downloadBtn.disabled = false;
+                            showStatus(`Done converting ${paletteNameStr} (${convertedColors.length} colors) / 成功转换调色板: ${paletteNameStr} (${convertedColors.length}种颜色)`, 'success');
+                        } catch (e) {
+                            showStatus(`Encountered error when parsing JSON / 解析JSON时出错: ${e.message}`, 'error');
+                        }
+                    }).catch(function(e) {
+                        showStatus(`Encountered error when reading JSON / 读取JSON文件时出错: ${e.message}`, 'error');
+                    });
+                }).catch(function(e) {
+                    showStatus(`Encountered error when opening JSON / 打开压缩文件时出错: ${e.message}`, 'error');
+                });
+            }
+            
+            // 显示调色板预览
+            function displayPalettePreview(name, colors) {
+                paletteName.textContent = name;
+                colorsContainer.innerHTML = '';
+                
+                colors.forEach(color => {
+                    // 将负数转换回ARGB十六进制
+                    const unsignedVal = color + 0x100000000;
+                    const hexColor = '#' + unsignedVal.toString(16).substring(2).toUpperCase();
+                    
+                    const colorBox = document.createElement('div');
+                    colorBox.className = 'color-box';
+                    colorBox.style.backgroundColor = hexColor;
+                    colorBox.textContent = hexColor;
+                    
+                    colorsContainer.appendChild(colorBox);
+                });
+                
+                previewSection.style.display = 'block';
+            }
+            
+            // 显示状态消息
+            function showStatus(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status ' + type;
+                statusMessage.style.display = 'block';
+            }
+            
+            // HSV转ARGB
+            function hsvToIPColor(h, s, v) {
+
+                let C = v * s
+                let X = C * (1 - Math.abs(((h / 60) % 2) - 1))
+                let m = v - C
+                
+                // 使用HSV转RGB算法
+                let rp, gp, bp;
+
+                
+                switch (Math.floor(h / 60)) {
+                    case 0: rp = C; gp = X; bp = 0; break;
+                    case 1: rp = X; gp = C; bp = 0; break;
+                    case 2: rp = 0; gp = C; bp = X; break;
+                    case 3: rp = 0; gp = X; bp = C; break;
+                    case 4: rp = X; gp = 0; bp = C; break;
+                    case 5: rp = C; gp = 0; bp = X; break;
+                }
+                
+                // 转换为0-255整数
+                let r ,g ,b;
+                r = (rp + m) * 255;
+                g = (gp + m) * 255;
+                b = (bp + m) * 255;
+                
+                // 组合成ARGB整数 (alpha固定为0xFF)
+                return (0xFF << 24) | (r << 16) | (g << 8) | b;
+            }
+            
+            // 下载.clrs文件
+            downloadBtn.addEventListener('click', function() {
+                if (!convertedData) return;
+                
+                const jsonStr = JSON.stringify(convertedData, null, 4);
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = convertedData.name + '.clrs';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                showStatus(`Downloaded ${convertedData.name}.clrs / 文件已下载: ${convertedData.name}.clrs`, 'success');
+            });
+        });
+    </script>
+</body>
+</html>
