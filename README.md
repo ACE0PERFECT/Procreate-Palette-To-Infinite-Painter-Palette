@@ -56,3 +56,9 @@ Procreate uses HSB(HSV) model for color storage, while Infinite Painter uses ARG
 ## 2.5 modify this script if you need / 自定义
 Currently I am not adding batch convertion and other feature to this. Modify if you need. If you really need some features and dont know how to, tell me and I will implement in the future.      
 现在没做批量处理等等的功能，如果有需要的话，你可以自己加上。真需要的功能但是现在没有，跟我讲我也许会实现。
+
+---
+
+# 3. Compatibility / 3. 兼容性
+Both of .py and .html methods have been tested on Procreate 5.3.15 (internal version 247e52bae1) and Infinite Painter 7.1.18.  
+Python和html都在Procreate的5.3.15版本(内部版本 247e52bae1) 和 Infinite Painter 7.1.18版本测试通过了.   
